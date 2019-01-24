@@ -40,8 +40,9 @@ type chacha20poly1305 struct {
 	isXChaCha bool
 }
 
-// NewX returns a XChaCha20Poly1305 AEAD
-// The key must be 256-bit long
+// NewX returns a XChaCha20Poly1305 AEAD.
+// The key must be 256 bits long, 
+// and the nonce must be 192 bits long. 
 func NewX(key *memguard.LockedBuffer) (cipher.AEAD, error) {
 	if len(key.Buffer()) != KeySize {
 		return nil, ErrInvalidKey
@@ -54,8 +55,10 @@ func NewX(key *memguard.LockedBuffer) (cipher.AEAD, error) {
 	return k, nil
 }
 
-// New returns a ChaCha20Poly1305 AEAD
-// The key must be 256-bit long
+// New returns a ChaCha20Poly1305 AEAD.
+// The key must be 256 bits long, 
+// and the nonce must be 64 bits long. 
+// The nonce must be randomly generated or used only once. 
 func New(key *memguard.LockedBuffer) (cipher.AEAD, error) {
 	if len(key.Buffer()) != KeySize {
 		return nil, ErrInvalidKey
